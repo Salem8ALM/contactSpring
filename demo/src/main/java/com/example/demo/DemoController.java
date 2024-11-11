@@ -12,9 +12,19 @@ List<Contact> contacts = new ArrayList();
 
     @PostMapping("/addContact")
     String contact (@RequestBody Contact contact) {
+        // bonus
+        boolean checkEmail = false;
+        for (Contact each: contacts){
+            if (each.getEmail().equals(contact.getEmail())){
+               checkEmail=true;
+            }
+        }
+
          if (contact.getName() == null || contact.getEmail() == null || contact.getPhone() == null) {
              return "failed to add contact";
 
+         } else if (checkEmail) {
+             return "Contact already exists with this email!";
          } else {
              contacts.add(contact);
              return "Contact added successfully!";
